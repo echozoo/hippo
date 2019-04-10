@@ -1,7 +1,7 @@
 package org.hippo.jwts.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.hippo.jwts.po.SysRolePermission;
+import org.hippo.common.po.SysRolePermission;
 
 /**
  * <p>

@@ -63,6 +63,11 @@
             <artifactId>json</artifactId>
             <version>20180813</version>
         </dependency>
+        <dependency>
+            <groupId>org.hippo</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

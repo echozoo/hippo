@@ -1,7 +1,7 @@
-package org.hippo.jwts.mapper;
+package org.hippo.common.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.hippo.jwts.po.SysLogs;
+import org.hippo.common.po.UserInfo;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import org.hippo.jwts.po.SysLogs;
  * @author dujf
  * @since 2018-12-29
  */
-public interface SysLogsMapper extends BaseMapper<SysLogs> {
+public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
 }

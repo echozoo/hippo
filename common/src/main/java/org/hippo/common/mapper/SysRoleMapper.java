@@ -1,7 +1,7 @@
-package org.hippo.jwts.mapper;
+package org.hippo.common.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.hippo.jwts.po.SysRole;
+import org.hippo.common.po.SysRole;
 
 /**
  * <p>

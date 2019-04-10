@@ -1,7 +1,7 @@
-package org.hippo.jwts.mapper;
+package org.hippo.common.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.hippo.jwts.po.SysUserRole;
+import org.hippo.common.po.SysLogs;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import org.hippo.jwts.po.SysUserRole;
  * @author dujf
  * @since 2018-12-29
  */
-public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
+public interface SysLogsMapper extends BaseMapper<SysLogs> {
 
 }

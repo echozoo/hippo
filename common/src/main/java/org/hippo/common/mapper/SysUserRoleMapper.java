@@ -1,7 +1,7 @@
-package org.hippo.jwts.mapper;
+package org.hippo.common.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.hippo.jwts.po.UserInfo;
+import org.hippo.common.po.SysUserRole;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import org.hippo.jwts.po.UserInfo;
  * @author dujf
  * @since 2018-12-29
  */
-public interface UserInfoMapper extends BaseMapper<UserInfo> {
+public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
 }

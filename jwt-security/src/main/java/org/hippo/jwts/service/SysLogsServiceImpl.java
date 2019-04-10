@@ -1,8 +1,8 @@
 package org.hippo.jwts.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.hippo.jwts.mapper.SysLogsMapper;
-import org.hippo.jwts.po.SysLogs;
+import org.hippo.common.mapper.SysLogsMapper;
+import org.hippo.common.po.SysLogs;
 import org.springframework.stereotype.Service;
 
 /**

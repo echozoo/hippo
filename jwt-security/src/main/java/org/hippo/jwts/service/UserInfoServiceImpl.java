@@ -1,8 +1,8 @@
 package org.hippo.jwts.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.hippo.jwts.mapper.UserInfoMapper;
-import org.hippo.jwts.po.UserInfo;
+import org.hippo.common.mapper.UserInfoMapper;
+import org.hippo.common.po.UserInfo;
 import org.springframework.stereotype.Service;
 
 /**

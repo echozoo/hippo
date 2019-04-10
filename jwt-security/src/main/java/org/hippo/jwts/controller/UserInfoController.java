@@ -5,7 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import org.hippo.jwts.exception.ElementExistException;
-import org.hippo.jwts.po.UserInfo;
+import org.hippo.common.po.UserInfo;
 import org.hippo.jwts.service.UserInfoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,4 +1,4 @@
-package org.hippo.jwts.tool;
+package org.hippo.common.tool;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;

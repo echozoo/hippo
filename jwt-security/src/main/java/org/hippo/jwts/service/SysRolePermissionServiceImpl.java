@@ -1,8 +1,8 @@
 package org.hippo.jwts.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.hippo.jwts.mapper.SysRolePermissionMapper;
-import org.hippo.jwts.po.SysRolePermission;
+import org.hippo.common.mapper.SysRolePermissionMapper;
+import org.hippo.common.po.SysRolePermission;
 import org.springframework.stereotype.Service;
 
 /**

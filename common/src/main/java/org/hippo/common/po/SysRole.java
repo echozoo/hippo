@@ -1,4 +1,4 @@
-package org.hippo.jwts.po;
+package org.hippo.common.po;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

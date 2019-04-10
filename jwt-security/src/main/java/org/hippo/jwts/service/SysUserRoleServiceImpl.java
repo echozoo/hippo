@@ -1,8 +1,8 @@
 package org.hippo.jwts.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.hippo.jwts.mapper.SysUserRoleMapper;
-import org.hippo.jwts.po.SysUserRole;
+import org.hippo.common.mapper.SysUserRoleMapper;
+import org.hippo.common.po.SysUserRole;
 import org.springframework.stereotype.Service;
 
 /**

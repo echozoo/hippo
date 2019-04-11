@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @author dujf
  */
 @Configuration
-@MapperScan("org.hippo")
+@MapperScan("org.hippo.common.mapper")
 public class MybatisPlusConfig {
 
   /**

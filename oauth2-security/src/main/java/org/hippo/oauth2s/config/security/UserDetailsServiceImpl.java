@@ -29,14 +29,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 @Configuration
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-  @Autowired
-  private UserInfoServiceImpl userInfoService;
+  private final UserInfoServiceImpl userInfoService;
 
-  @Autowired
-  private SysRoleServiceImpl sysRoleService;
+  private final SysRoleServiceImpl sysRoleService;
 
-  @Autowired
-  private SysUserRoleServiceImpl sysUserRoleService;
+  private final SysUserRoleServiceImpl sysUserRoleService;
+
+  @Autowired public UserDetailsServiceImpl(SysRoleServiceImpl sysRoleService, UserInfoServiceImpl userInfoService, SysUserRoleServiceImpl sysUserRoleService) {this.sysRoleService = sysRoleService;
+    this.userInfoService = userInfoService;
+    this.sysUserRoleService = sysUserRoleService;
+  }
 
   //
   @Override public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

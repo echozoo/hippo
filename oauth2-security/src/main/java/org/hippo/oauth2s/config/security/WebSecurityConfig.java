@@ -23,11 +23,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-  @Autowired
-  private UserAuthenticationProvider userAuthenticationProvider;
+  private final UserAuthenticationProvider userAuthenticationProvider;
 
-  @Autowired
-  private UserDetailsServiceImpl userDetailsService;
+  @Autowired public WebSecurityConfig(UserAuthenticationProvider userAuthenticationProvider) {this.userAuthenticationProvider = userAuthenticationProvider;}
 
   /**
    * security 拦截路径

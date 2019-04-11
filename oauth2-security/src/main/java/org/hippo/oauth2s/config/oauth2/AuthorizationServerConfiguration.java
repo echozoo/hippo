@@ -23,17 +23,22 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 @EnableAuthorizationServer
 class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-  @Autowired
+  final
   AuthenticationManager authenticationManager;
 
-  @Autowired
+  final
   RedisConnectionFactory redisConnectionFactory;
 
-  @Autowired
-  private ClientDetailsServiceImpl clientDetailsService;
+  private final ClientDetailsServiceImpl clientDetailsService;
 
-  @Autowired
-  private UserDetailsServiceImpl userDetailsService;
+  private final UserDetailsServiceImpl userDetailsService;
+
+  @Autowired public AuthorizationServerConfiguration(AuthenticationManager authenticationManager, RedisConnectionFactory redisConnectionFactory, ClientDetailsServiceImpl clientDetailsService, UserDetailsServiceImpl userDetailsService) {
+    this.authenticationManager = authenticationManager;
+    this.redisConnectionFactory = redisConnectionFactory;
+    this.clientDetailsService = clientDetailsService;
+    this.userDetailsService = userDetailsService;
+  }
 
   @Override
   public void configure(ClientDetailsServiceConfigurer clients) throws Exception {

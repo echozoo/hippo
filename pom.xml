@@ -22,4 +22,12 @@
         <module>common</module>
     </modules>
 
+
+    <properties>
+        <java.version>1.8</java.version>
+        <mybatis-plus.verison>3.0.6</mybatis-plus.verison>
+        <swagger.verison>1.8.0.RELEASE</swagger.verison>
+        <oauth2.security.version>2.3.5.RELEASE</oauth2.security.version>
+        <mysql.version>8.0.13</mysql.version>
+    </properties>
 </project>

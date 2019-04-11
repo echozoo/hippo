@@ -24,8 +24,9 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 
   private static final Logger logger = LoggerFactory.getLogger(UserAuthenticationProvider.class);
 
-  @Autowired
-  private UserDetailsServiceImpl userDetailsService;
+  private final UserDetailsServiceImpl userDetailsService;
+
+  @Autowired public UserAuthenticationProvider(UserDetailsServiceImpl userDetailsService) {this.userDetailsService = userDetailsService;}
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {

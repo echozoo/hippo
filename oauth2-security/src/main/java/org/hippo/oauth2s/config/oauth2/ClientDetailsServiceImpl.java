@@ -23,8 +23,9 @@ import org.springframework.security.oauth2.provider.ClientRegistrationException;
 @Configuration
 public class ClientDetailsServiceImpl implements ClientDetailsService {
 
-  @Autowired
-  private ClientsServiceImpl clientsService;
+  private final ClientsServiceImpl clientsService;
+
+  @Autowired public ClientDetailsServiceImpl(ClientsServiceImpl clientsService) {this.clientsService = clientsService;}
 
   @Override public ClientDetails loadClientByClientId(String s) throws ClientRegistrationException {
     Clients clients = clientsService.getOne(new QueryWrapper<Clients>().lambda().eq(Clients::getClientId, s));

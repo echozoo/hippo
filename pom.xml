@@ -16,8 +16,10 @@
     </parent>
 
     <modules>
-        <module>security-spring-boot-mybatis</module>
+        <module>security</module>
         <module>jwt-security</module>
+        <module>oauth2-security</module>
+        <module>common</module>
     </modules>
 
 </project>

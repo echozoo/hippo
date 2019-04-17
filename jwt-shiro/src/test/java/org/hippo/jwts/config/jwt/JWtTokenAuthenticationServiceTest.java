@@ -1,5 +1,6 @@
 package org.hippo.jwts.config.jwt;
 
+import javax.servlet.http.HttpServletRequest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ class JWtTokenAuthenticationServiceTest {
   }
 
   @Test
-  void getUserName() {
-    String username = jWtTokenAuthenticationService.getUsername("");
+  void getUserName(HttpServletRequest request) {
+    String username = jWtTokenAuthenticationService.getUsername(request);
     Assert.assertEquals("success", "lisi", username);
     System.out.println(username);
   }

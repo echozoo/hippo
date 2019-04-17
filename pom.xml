@@ -21,6 +21,7 @@
         <module>oauth2-security</module>
         <module>common</module>
         <module>shiro</module>
+        <module>jwt-shiro</module>
     </modules>
 
 

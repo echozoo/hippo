@@ -81,6 +81,14 @@ public class JWtTokenAuthenticationService {
    * @return token中包含的用户名
    */
   public String getUsername(String token) {
-    return Jwts.parser().setSigningKey(SECRET).parse(token).getBody().toString();
+    try {
+      Claims claims = Jwts.parser()
+          .setSigningKey(SECRET)
+          .parseClaimsJws(token.substring(TOKEN_PREFIX.length()).trim())
+          .getBody();
+      return claims.getSubject();
+    } catch (Exception e) {
+      return null;
+    }
   }
 }

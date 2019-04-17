@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
 
+  @Autowired
+  private SecurityManager securityManager;
+
   /**
    * 判断用户是否想要登入。
    * 检测header里面是否包含Authorization字段即可
@@ -63,13 +66,10 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
   protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
     if (isLoginAttempt(request, response)) {
       try {
-        executeLogin(request, response);
-      } catch (Exception e) {
-        e.printStackTrace();
-        return false;
         return executeLogin(request, response);
       } catch (Exception e) {
         e.printStackTrace();
+        return false;
       }
     }
     return true;

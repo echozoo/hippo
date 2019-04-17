@@ -67,6 +67,9 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
       } catch (Exception e) {
         e.printStackTrace();
         return false;
+        return executeLogin(request, response);
+      } catch (Exception e) {
+        e.printStackTrace();
       }
     }
     return true;

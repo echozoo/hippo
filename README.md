@@ -158,8 +158,7 @@ class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
 
 ```java
-*测试rebase
-*/
+*测     aaaaa试rebase
 
 /**
  * oauth2 几种获取token方式 client 可用basic 方式传递

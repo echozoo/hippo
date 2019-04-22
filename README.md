@@ -170,9 +170,8 @@ class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
 ```java
 /**
- * 测试rebase
-
- */
+*测试rebase
+*/
 
 /**
 *测试rebase

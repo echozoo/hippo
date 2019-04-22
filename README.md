@@ -147,7 +147,6 @@ class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 }
 ```
 ```java
-
 /**
  * oauth2 几种获取token方式 client 可用basic 方式传递
  * refresh token: http://localhost:8013/oauth/token?grant_type=refresh_token&refresh_token=3680e51e-fbf4-417a-85d9-6a8205c14c0a&client_id=user&client_secret=123456

@@ -80,7 +80,9 @@ public class JWtTokenAuthenticationService {
    *
    * @return token中包含的用户名
    */
-  public String getUsername(String token) {
+  public String getUsername(HttpServletRequest request) {
+    // 从Header中拿到token
+    String token = request.getHeader(HEADER_STRING);
     try {
       Claims claims = Jwts.parser()
           .setSigningKey(SECRET)

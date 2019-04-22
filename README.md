@@ -122,6 +122,12 @@ oauth2-security区分了客户端和用户。
        return manager;
      }
 ```  
+
+/**
+ * 测试rebase
+
+ */
+
 8 . 配置资源server（@EnableResourceServer） 继承ResourceServerConfigurerAdapter配置oauth2资源控制
 ```java
 @Configuration
@@ -133,6 +139,11 @@ class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
     //资源id和loadClientByClientId查询到的相匹配
     resources.resourceId("API");
   }
+
+/**
+ * 测试rebase
+
+ */
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
@@ -147,6 +158,10 @@ class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 }
 ```
 ```java
+/**
+ * 测试rebase
+
+ */
 
 /**
  * oauth2 几种获取token方式 client 可用basic 方式传递

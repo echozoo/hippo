@@ -4,10 +4,16 @@ import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.extension.api.R;
 import io.swagger.annotations.Api;
 import javax.servlet.http.HttpServletRequest;
+import org.hippo.oauth2s.config.oauth2.SignInHelper;
 import org.hippo.oauth2s.exception.ElementExistException;
 import org.hippo.oauth2s.params.UserParams;
 import org.hippo.oauth2s.service.LoginAndRegisterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
+import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,8 +32,14 @@ import springfox.documentation.annotations.ApiIgnore;
 @Api(description = "注册与登录", tags = "注册与登录")
 public class LoginController {
 
-  @Autowired
-  private LoginAndRegisterServiceImpl loginAndRegisterService;
+  private final LoginAndRegisterServiceImpl loginAndRegisterService;
+
+  private final SignInHelper signInHelper;
+
+  @Autowired public LoginController(LoginAndRegisterServiceImpl loginAndRegisterService, SignInHelper signInHelper) {
+    this.loginAndRegisterService = loginAndRegisterService;
+    this.signInHelper = signInHelper;
+  }
 
 
   @PostMapping(value = "/login/in")
@@ -35,9 +47,14 @@ public class LoginController {
     return R.ok(loginAndRegisterService.login(request, userParams));
   }
 
+  @PostMapping(value = "/two/step/login/in")
+  public R twoStepLoginIn() {
+    return R.ok(signInHelper.signInTwoStep());
+  }
+
   @PostMapping(value = "/login/out")
-  public R<String> loginOut() {
-    return new R<>();
+  public R loginOut() {
+    return R.ok(signInHelper.logout());
   }
 
   @PostMapping(value = "/register")

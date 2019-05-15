@@ -14,6 +14,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
  * @author dujf
@@ -56,7 +58,7 @@ class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdap
   @Override
   public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
     endpoints
-//          .tokenStore(new RedisTokenStore(redisConnectionFactory))
+        .tokenStore(new RedisTokenStore(redisConnectionFactory))
         .authenticationManager(authenticationManager)
         //刷新token会用到userDetailsService
         .userDetailsService(userDetailsService)
@@ -68,6 +70,11 @@ class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdap
     //允许表单认证
     oauthServer.passwordEncoder(passwordEncoder());
     oauthServer.allowFormAuthenticationForClients();
+  }
+
+  @Bean
+  public DefaultOAuth2RequestFactory oAuth2RequestFactory() {
+    return new DefaultOAuth2RequestFactory(clientDetailsService);
   }
 
   /**

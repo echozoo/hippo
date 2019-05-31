@@ -3,6 +3,7 @@ package org.hippo.oauth2s.controller.user;
 import com.baomidou.mybatisplus.extension.api.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.security.Principal;
 import java.util.List;
 import org.hippo.common.po.UserInfo;
 import org.hippo.oauth2s.exception.ElementExistException;
@@ -57,6 +58,11 @@ public class UserInfoController {
   public R<Authentication> getMessages() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     return R.ok(authentication);
+  }
+
+  @GetMapping("/user-info")
+  public R getMessages(Principal user) {
+    return R.ok(user);
   }
 
   @GetMapping

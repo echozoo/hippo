@@ -13,6 +13,8 @@ public class Oauth2SecurityApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(Oauth2SecurityApplication.class, args);
+    String lines = "--------------------------------";
+    System.out.println(String.format("%s\nhttp://localhost:8013/swagger-ui.html\n%s", lines, lines));
   }
 
 }

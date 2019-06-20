@@ -1,13 +1,19 @@
 package org.hippo.oauth2s.config.security;
 
+import org.hippo.oauth2s.config.oauth2.UserAuthenticationProvider;
+import org.hippo.oauth2s.config.oauth2.UserDetailsServiceImpl;
+import org.hippo.oauth2s.config.sina.SinaFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 /**
  * @author dellll
@@ -22,10 +28,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+  private final SinaFilter sinaFilter;
+
+  private final UserDetailsServiceImpl userDetailsService;
 
   private final UserAuthenticationProvider userAuthenticationProvider;
 
-  @Autowired public WebSecurityConfig(UserAuthenticationProvider userAuthenticationProvider) {this.userAuthenticationProvider = userAuthenticationProvider;}
+  @Autowired @Lazy public WebSecurityConfig(UserAuthenticationProvider userAuthenticationProvider, SinaFilter sinaFilter, UserDetailsServiceImpl userDetailsService) {
+    this.userAuthenticationProvider = userAuthenticationProvider;
+    this.sinaFilter = sinaFilter;
+    this.userDetailsService = userDetailsService;
+  }
 
   /**
    * security 拦截路径
@@ -40,13 +53,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .anyRequest()
         .and()
         .authorizeRequests()
-        .antMatchers("/oauth/**").permitAll();
+        .antMatchers("/oauth/**").permitAll()
+        .and()
+        .addFilterBefore(sinaFilter, BasicAuthenticationFilter.class)
     ;
   }
 
   @Override
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.authenticationProvider(userAuthenticationProvider);
+    //密码认证
+    auth
+        .authenticationProvider(userAuthenticationProvider)
+        .userDetailsService(userDetailsService)
+        //密码验证方式
+        .passwordEncoder(new BCryptPasswordEncoder())
+    ;
+    //sms认证
+//    auth
+//        .authenticationProvider()
+//    ;
   }
 
   /**

@@ -1,6 +1,7 @@
 package org.hippo.oauth2s.config.oauth2;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -43,14 +44,14 @@ public class SignInHelper {
     this.clientDetailsService = clientDetailsService;
   }
 
-  public OAuth2AccessToken signIn(String clientId, String username, Collection<? extends GrantedAuthority> authorities, Set<String> scope) {
+  public OAuth2AccessToken signIn(String clientId, Object user, Collection<? extends GrantedAuthority> authorities, Set<String> scope) {
 
     AuthorizationRequest request = new AuthorizationRequest(clientId, scope);
     TokenRequest tokenRequest = oAuth2RequestFactory.createTokenRequest(request, "password");
     ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
     OAuth2Request oAuth2Request = oAuth2RequestFactory.createOAuth2Request(clientDetails, tokenRequest);
     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-        new User(username, "", authorities), "", authorities
+        user, "", authorities
     );
     OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authenticationToken);
     return authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
@@ -60,7 +61,7 @@ public class SignInHelper {
     OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication();
     if (oAuth2Authentication.isAuthenticated()) {
       logout();
-      return signIn(oAuth2Authentication.getOAuth2Request().getClientId(), oAuth2Authentication.getUserAuthentication().getName(), oAuth2Authentication.getOAuth2Request().getAuthorities(), oAuth2Authentication.getOAuth2Request().getScope());
+      return signIn(oAuth2Authentication.getOAuth2Request().getClientId(), oAuth2Authentication.getUserAuthentication().getName(), oAuth2Authentication.getAuthorities(), oAuth2Authentication.getOAuth2Request().getScope());
     } else {
       throw new BadCredentialsException("oauth2 authentication fail.");
     }

@@ -1,4 +1,4 @@
-package org.hippo.oauth2s.config.security;
+package org.hippo.oauth2s.config.oauth2;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import java.util.ArrayList;

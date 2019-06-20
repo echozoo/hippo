@@ -123,7 +123,7 @@ public class SinaServiceImpl implements SinaService {
     scope.add(clients.getScope());
     List authorities = new ArrayList<SimpleGrantedAuthority>();
     authorities.add(new SimpleGrantedAuthority(clients.getAuthorities()));
-    return signInHelper.signIn(clients.getClientId(), result.get("name").toString(), authorities, scope);
+    return signInHelper.signIn(clients.getClientId(), result, authorities, scope);
   }
 
 

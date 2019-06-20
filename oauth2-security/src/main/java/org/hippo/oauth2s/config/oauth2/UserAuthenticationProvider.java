@@ -1,4 +1,4 @@
-package org.hippo.oauth2s.config.security;
+package org.hippo.oauth2s.config.oauth2;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

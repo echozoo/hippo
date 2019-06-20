@@ -54,8 +54,8 @@ public class LoginController {
   }
 
   @GetMapping(value = "/sina/login/in")
-  public R loginIn(@RequestParam String code) {
-    return R.ok(sinaService.getSinaUserInfo(sinaService.getSinaToken(code)));
+  public void loginIn() {
+    return;
   }
 
   @GetMapping(value = "/sina/login/in/error")

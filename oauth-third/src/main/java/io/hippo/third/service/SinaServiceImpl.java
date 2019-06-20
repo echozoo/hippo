@@ -1,6 +1,9 @@
-package org.hippo.oauth2s.service;
+package io.hippo.third.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.hippo.third.config.oauth2.SignInHelper;
+import io.hippo.third.config.sina.SinaConfig;
+import io.hippo.third.config.sina.SinaToken;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,9 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.hippo.common.po.Clients;
-import org.hippo.oauth2s.config.oauth2.SignInHelper;
-import org.hippo.oauth2s.config.sina.SinaConfig;
-import org.hippo.oauth2s.config.sina.SinaToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

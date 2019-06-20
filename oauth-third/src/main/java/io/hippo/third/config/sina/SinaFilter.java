@@ -1,11 +1,11 @@
-package org.hippo.oauth2s.config.sina;
+package io.hippo.third.config.sina;
 
+import io.hippo.third.service.SinaServiceImpl;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.hippo.oauth2s.service.SinaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;

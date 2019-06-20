@@ -1,7 +1,7 @@
-package org.hippo.oauth2s.config;
+package io.hippo.third.config;
 
-import org.hippo.oauth2s.config.sina.SinaConfig;
-import org.hippo.oauth2s.config.sina.SinaProperties;
+import io.hippo.third.config.sina.SinaConfig;
+import io.hippo.third.config.sina.SinaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

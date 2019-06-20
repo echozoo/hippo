@@ -1,6 +1,6 @@
-package org.hippo.oauth2s;
+package io.hippo.third;
 
-import org.hippo.oauth2s.config.sina.SinaProperties;
+import io.hippo.third.config.sina.SinaProperties;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

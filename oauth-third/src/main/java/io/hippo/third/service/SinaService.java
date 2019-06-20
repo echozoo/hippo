@@ -1,6 +1,6 @@
-package org.hippo.oauth2s.service;
+package io.hippo.third.service;
 
-import org.hippo.oauth2s.config.sina.SinaToken;
+import io.hippo.third.config.sina.SinaToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
 /**

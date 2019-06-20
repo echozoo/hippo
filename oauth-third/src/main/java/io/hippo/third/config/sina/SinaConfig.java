@@ -1,4 +1,4 @@
-package org.hippo.oauth2s.config.sina;
+package io.hippo.third.config.sina;
 
 
 /**

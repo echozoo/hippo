@@ -1,0 +1,33 @@
+github:
+  client:
+    clientId:
+    clientSecret:
+    accessTokenUri: https://github.com/login/oauth/access_token
+    userAuthorizationUri: https://github.com/login/oauth/authorize
+    tokenName: oauth_token
+    authenticationScheme: header
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.github.com/user
+sina:
+  client:
+    clientId:
+    clientSecret:
+    accessTokenUri: https://api.weibo.com/oauth2/access_token # https://github.com/login/oauth/access_token
+    userAuthorizationUri: https://api.weibo.com/oauth2/authorize # https://github.com/login/oauth/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.weibo.com/2/users/show.json
+# https://api.weibo.com/oauth2/authorize?client_id=2080086846&response_type=code&redirect_uri=http://127.0.0.1:8013/login
+security:
+  oauth2:
+    client:
+      client-id: user
+      client-secret: user
+      scope: read,write
+      auto-approve-scopes: '.*'
+spring:
+  main:
+    allow-bean-definition-overriding: true
+server:
+  port: 8013

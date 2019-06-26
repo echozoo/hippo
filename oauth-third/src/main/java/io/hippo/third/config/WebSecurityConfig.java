@@ -1,24 +1,37 @@
-package io.hippo.third.config.security;
+package io.hippo.third.config;
 
 import io.hippo.third.config.oauth2.UserAuthenticationProvider;
 import io.hippo.third.config.oauth2.UserDetailsServiceImpl;
-import io.hippo.third.config.sina.SinaFilter;
+import io.hippo.third.config.sina.SinaUserInfoTokenServices;
 import io.hippo.third.config.sms.SmsFilter;
 import io.hippo.third.config.sms.SmsProvider;
 import io.hippo.third.handler.AuthFailHandler;
 import io.hippo.third.handler.AuthSuccessHandler;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
+import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
+import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.filter.CompositeFilter;
 
 /**
  * @author dellll
@@ -33,8 +46,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final SinaFilter sinaFilter;
-
   private final UserDetailsServiceImpl userDetailsService;
 
   private final UserAuthenticationProvider userAuthenticationProvider;
@@ -47,9 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final AuthSuccessHandler authSuccessHandler;
 
-  @Autowired public @Lazy WebSecurityConfig(UserAuthenticationProvider userAuthenticationProvider, SinaFilter sinaFilter, UserDetailsServiceImpl userDetailsService, SmsProvider smsProvider, SmsFilter smsFilter, AuthFailHandler authFailHandler, AuthSuccessHandler authSuccessHandler) {
+  @Autowired public @Lazy WebSecurityConfig(UserAuthenticationProvider userAuthenticationProvider, UserDetailsServiceImpl userDetailsService, SmsProvider smsProvider, SmsFilter smsFilter, AuthFailHandler authFailHandler, AuthSuccessHandler authSuccessHandler) {
     this.userAuthenticationProvider = userAuthenticationProvider;
-    this.sinaFilter = sinaFilter;
     this.userDetailsService = userDetailsService;
     this.smsProvider = smsProvider;
     this.smsFilter = smsFilter;
@@ -66,14 +76,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    * @throws Exception
    */
   @Override protected void configure(HttpSecurity http) throws Exception {
-    http.requestMatchers()
-        .anyRequest()
-        .and()
+    http
+        .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
+        .addFilterAfter(smsFilter, BasicAuthenticationFilter.class)
         .authorizeRequests()
         .antMatchers("/oauth/**").permitAll()
-        .and()
-        .addFilterBefore(sinaFilter, UsernamePasswordAuthenticationFilter.class)
-        .addFilterBefore(smsFilter, UsernamePasswordAuthenticationFilter.class)
+        .antMatchers("/login/**").permitAll()
     ;
   }
 
@@ -114,4 +122,62 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     filter.setAuthenticationManager(authenticationManagerBean());
     return filter;
   }
+
+  /**
+   * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   *
+   * @return
+   */
+
+  @Autowired
+  OAuth2ClientContext oauth2ClientContext;
+
+  @Bean
+  public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
+    FilterRegistrationBean<OAuth2ClientContextFilter> registration = new FilterRegistrationBean<>();
+    registration.setFilter(filter);
+    registration.setOrder(-100);
+    return registration;
+  }
+
+  @Bean
+  public FilterRegistrationBean someFilterRegistration() {
+    FilterRegistrationBean registration = new FilterRegistrationBean();
+    registration.setFilter(ssoFilter());
+    registration.setOrder(-100);
+    return registration;
+  }
+
+  @Bean
+  @ConfigurationProperties("sina.client")
+  public AuthorizationCodeResourceDetails sina() {
+    return new AuthorizationCodeResourceDetails();
+  }
+
+  @Bean
+  @Qualifier("sinaResource")
+  @Primary
+  @ConfigurationProperties("sina.resource")
+  public ResourceServerProperties sinaResource() {
+    return new ResourceServerProperties();
+  }
+
+  private Filter ssoFilter() {
+    CompositeFilter filter = new CompositeFilter();
+    List<Filter> filters = new ArrayList<>();
+    OAuth2ClientAuthenticationProcessingFilter sinaFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/sina");
+    OAuth2RestTemplate sinaTemplate = new OAuth2RestTemplate(sina(), oauth2ClientContext);
+    sinaFilter.setRestTemplate(sinaTemplate);
+    SinaUserInfoTokenServices sinaTokenServices = new SinaUserInfoTokenServices(sinaResource().getUserInfoUri(), sina().getClientId());
+    sinaTokenServices.setRestTemplate(sinaTemplate);
+    sinaFilter.setTokenServices(sinaTokenServices);
+    sinaFilter.setAuthenticationSuccessHandler(authSuccessHandler);
+    //存库
+    sinaTokenServices.setAuthoritiesExtractor(new MyAuthoritiesExtractor());
+    sinaTokenServices.setPrincipalExtractor(new MyPrincipalExtractor());
+    filters.add(sinaFilter);
+    filter.setFilters(filters);
+    return filter;
+  }
+
 }

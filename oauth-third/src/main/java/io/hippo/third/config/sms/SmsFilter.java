@@ -6,13 +6,11 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
@@ -24,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class SmsFilter extends AbstractAuthenticationProcessingFilter {
 
   public SmsFilter() {
-    super((RequestMatcher) (new AntPathRequestMatcher("/login/sms")));
+    super(new AntPathRequestMatcher("/login/sms"));
   }
 
   @Autowired

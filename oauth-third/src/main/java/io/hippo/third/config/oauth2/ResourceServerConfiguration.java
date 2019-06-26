@@ -20,9 +20,10 @@ class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
     http
         .authorizeRequests()
         //配置order访问控制，必须认证过后才可以访问
-        .antMatchers("/security/user/**").hasAnyAuthority("USER")
+        .antMatchers("/security/user/**").hasAnyRole("USER")
         .antMatchers("/security/role/**").hasAnyRole("ADMIN")
         .anyRequest().permitAll()
+        //禁止用session
     ;
   }
 }

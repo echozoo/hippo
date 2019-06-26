@@ -29,7 +29,7 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
   @Autowired public AuthSuccessHandler(SignInHelper signInHelper) {this.signInHelper = signInHelper;}
 
   @Override public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
-    OAuth2AccessToken token = signInHelper.signIn("role", authentication.getPrincipal(), authentication.getAuthorities(), new HashSet(Collections.singleton("USER")));
+    OAuth2AccessToken token = signInHelper.signIn("role", authentication.getPrincipal(), authentication.getAuthorities(), new HashSet(Collections.singleton("read")));
     response.setContentType("application/json;charset=UTF-8");
     response.setStatus(HttpStatus.OK.value());
     response.getWriter().write(new ObjectMapper().writeValueAsString(token));

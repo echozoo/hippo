@@ -6,7 +6,6 @@ import io.hippo.third.config.oauth2.SignInHelper;
 import io.hippo.third.exception.ElementExistException;
 import io.hippo.third.params.UserParams;
 import io.hippo.third.service.LoginAndRegisterServiceImpl;
-import io.hippo.third.service.SinaServiceImpl;
 import io.swagger.annotations.Api;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,33 +32,16 @@ public class LoginController {
 
   private final SignInHelper signInHelper;
 
-  private final SinaServiceImpl sinaService;
 
-  @Autowired public LoginController(LoginAndRegisterServiceImpl loginAndRegisterService, SignInHelper signInHelper, SinaServiceImpl sinaService) {
+  @Autowired public LoginController(LoginAndRegisterServiceImpl loginAndRegisterService, SignInHelper signInHelper) {
     this.loginAndRegisterService = loginAndRegisterService;
     this.signInHelper = signInHelper;
-    this.sinaService = sinaService;
   }
 
 
   @PostMapping(value = "/login/in")
   public R loginIn(@RequestBody UserParams userParams, @ApiIgnore HttpServletRequest request) throws HttpRequestMethodNotSupportedException {
     return R.ok(loginAndRegisterService.login(request, userParams));
-  }
-
-  @GetMapping(value = "/sina/code/url")
-  public R getSinaCodeUrl() {
-    return R.ok(sinaService.getSinaCodeUrl());
-  }
-
-  @GetMapping(value = "/sina/login/in")
-  public void loginIn() {
-    return;
-  }
-
-  @GetMapping(value = "/sina/login/in/error")
-  public R loginError() {
-    return R.ok("error");
   }
 
   @PostMapping(value = "/two/step/login/in")

@@ -155,3 +155,7 @@ class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
  * authorization code: http://localhost:8013/oauth/authorize?response_type=code&client_id=code&redirect_uri=http://localhost:8013/security/login&scope=all
  */
 ```
+
+## 整合oauth2 三方登录认证
+
+https://github.com/athc/hippo/blob/master/oauth-third/README.md

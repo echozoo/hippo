@@ -103,9 +103,6 @@ oauth2-security区分了客户端和用户。
 ```
 7 . 修改security的资源控制,不拦截oauth2资源
 ```java
-/**
-*测试rebase
-*/
 @Override protected void configure(HttpSecurity http) throws Exception {
       http
           .authorizeRequests()
@@ -114,9 +111,6 @@ oauth2-security区分了客户端和用户。
       ;
     }
     
-    /**
-    *测试rebase
-    */
    /**
       * 在这security中，把AuthenticationManager交给Spring，
       * 这一步的配置是必不可少的，否则SpringBoot会自动配置一个AuthenticationManager,覆盖掉内存中的用户
@@ -127,9 +121,6 @@ oauth2-security区分了客户端和用户。
        AuthenticationManager manager = super.authenticationManagerBean();
        return manager;
      }
-     /**
-     *测试rebase
-     */
 ```  
 8 . 配置资源server（@EnableResourceServer） 继承ResourceServerConfigurerAdapter配置oauth2资源控制
 ```java
@@ -155,11 +146,7 @@ class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
   }
 }
 ```
-
-
 ```java
-*测     aaaaa试rebase
-
 /**
  * oauth2 几种获取token方式 client 可用basic 方式传递
  * refresh token: http://localhost:8013/oauth/token?grant_type=refresh_token&refresh_token=3680e51e-fbf4-417a-85d9-6a8205c14c0a&client_id=user&client_secret=123456
@@ -167,9 +154,8 @@ class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
  * password: http://localhost:8013/oauth/token?username=zhangsan&password=123456&grant_type=password&scope=read&client_id=user&client_secret=1234567
  * authorization code: http://localhost:8013/oauth/authorize?response_type=code&client_id=code&redirect_uri=http://localhost:8013/security/login&scope=all
  */
-
-/**
-*测试rebase
-*/
-
 ```
+
+## 整合oauth2 三方登录认证
+
+https://github.com/athc/hippo/blob/master/oauth-third/README.md
